@@ -2,33 +2,22 @@
 - name: 'verify the version of your OS.'
   fail: msg='enterprise undefined'
   when: ansible_os_family != "RedHat"
-  tags:
-    - install
-    - postgres
 
 - name: 'make sure pg_rpm_dir is defined.'
   fail: msg='variable pg_rpm_dir is undefined'
   when: pg_rpm_dir is undefined
-  tags:
-    - install
-    - postgres
 
 - name: 'make sure pg_username and pg_password are defined.'
   fail: msg='variables undefined'
   when:
     - pg_username is undefined
     - pg_password is undefined
-  tags:
-    - install
-    - postgres
 
 - name: 'install postgres packages'
   become: yes
   yum: name={{ item }} state=present
   with_items: '{{ postgres_packages }}'
   tags:
-    - install
-    - postgres
     - python-pip
 
 - name: 'install required libraries'
@@ -37,6 +26,4 @@
   with_items:
     - pexpect
   tags:
-    - install
-    - postgres
     - startslave
