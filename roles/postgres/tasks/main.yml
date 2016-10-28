@@ -2,6 +2,11 @@
 
 # Install as root
 - include: install.yml
+  tags:
+    - postgres
+    - install
 
 # Run configuration as postgres
 - include: config.yml
+  tags:
+    - postgres
