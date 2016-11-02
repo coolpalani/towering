@@ -4,8 +4,7 @@
 Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox"
   config.vm.provider "vmware_fusion"
-  config.vm.box = "Opscode centos-6.5"
-  config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box"
+  config.vm.box = "centos/7"
   config.vm.box_check_update = true
   config.ssh.forward_agent = false
   config.ssh.insert_key = false
@@ -75,5 +74,3 @@ Vagrant.configure("2") do |config|
   end
 
 end
-
-
