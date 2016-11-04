@@ -17,7 +17,6 @@ configure_private_vars:
 
 pg_host: data1.intra
 pg_ip: 10.1.1.100
-pg_subnet: 10.1.1.0/24
 slave_ip: 10.1.1.200
 
 #tower_url: https://releases.ansible.com/ansible-tower/setup-bundle/{{ tower_name }}.tar.gz

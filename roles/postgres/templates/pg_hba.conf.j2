@@ -17,4 +17,4 @@ host    replication all         {{ pg_ip }}/32        trust
 {% endif %}
 
 # The application needs access to the database
-host    all         all         {{ pg_subnet }}       password
+host    all         all         samenet       password

@@ -20,4 +20,3 @@ configure_private_vars:
 
 pg_host: localhost
 pg_ip: 127.0.0.1
-pg_subnet:  '127.0.0.1/32'
