@@ -1,0 +1,60 @@
+input {
+{% for item in logs %}
+            file  {
+                path => {{ item.path }}_{{ item.filename }}
+                type => "{{ type_tag }}"
+                start_position => "beginning"
+                 }
+{% endfor %}
+     }
+
+filter {
+
+  if [type] == "{{ type_tag }}" {
+    multiline {
+         pattern => "^\s"
+                 what => "previous"
+    }
+
+     grok {
+     patterns_dir => "{{ patterns_path }}"
+          match => {
+          "message" => [ "%{TIMESTAMP_ISO8601:timestamp} %{WORD:severity} %{GREEDYDATA:msg} " ]
+}
+}
+
+         mutate{
+             add_tag => ["{{ type_tag|upper }}"]
+
+             add_field => {
+                "log_domain" => "{{ log_domain_name }}"
+                "log_type" => "{{ log_type }}"
+                "log_component" => "{{ log_component }}"
+                "DTAP_Stage" => "{{ dtap_stage }}"
+                "ci" => "{{ config_item }}"
+                "Event Type" => "{{ event_type }}"
+                        }
+                }
+               }
+}
+
+output {
+
+redis {
+host => "{{ redis_host }}"
+data_type => "{{ output_data_type }}"
+key => "{{ output_key }}"
+codec => {{ output_codec }}
+}
+
+
+#file {
+#       codec => {{ output_codec }}
+#Note that the file path should exist before you configure the same below
+#       path => ["{{ file_output  }}"]
+#
+#
+#}
+
+stdout { codec => {{ std_output }} }
+}
