@@ -1,0 +1,38 @@
+---
+#Variables for your host config of logstash
+logstash_user: logstash
+grok_pattern_path: "/etc/logstash/patterns"
+logstash_ansible_tower_config_path: "/etc/logstash/conf.d"
+
+#List of log file paths and names to be configured as a part of the logstash template    
+logs:
+  - { path: "/var/log/tower/" , filename: "tower.log" }
+  - { path: "/var/log/tower/" , filename: "task_system.log" }
+  - { path: "/var/log/tower/" , filename: "socketio_service.log" }
+  - { path: "/var/log/tower/" , filename: "fact_receiver.log" }
+  - { path: "/var/log/tower/" , filename: "callback_receiver.log" }
+  - { path: "/var/log/supervisor/" , filename: "awx-celery.log" }
+  - { path: "/var/log/supervisor/" , filename: "supervisord.log" }
+
+# Tag name for identifying logging by tags and defining their logging properties
+type_tag: "ansible-tower"
+
+# Local path for finding patterns for log shipping
+patterns_path: "./pattern"    
+
+#Log properties for the tags
+log_domain_name: "ANSIBLE-TOWER-DOMAIN-NAME" #To be changed as per your naming convention
+log_type: "application"
+log_component: "ANSIBLE-TOWER-ALL-LOGS"
+config_item: "ANSIBLE-TOWER"
+event_type: "TECHNICAL"
+
+#Output config
+redis_host: "logging.com" #To be changed as per requirement
+output_data_type: "list"
+output_key: "logstash"
+output_codec: "json"
+
+#Note that the file path should exist before you configure the same below
+file_output: "/var/log/logadapter/temporary.test" #Only a temporary test location to test output patterns based on template"
+std_output: "rubydebug"
