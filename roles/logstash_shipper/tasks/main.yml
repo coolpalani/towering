@@ -1,15 +1,16 @@
 ---
-- assert:
+- name: Check if DTAP stage is defined
+  assert:
     that:
       - "dtap_stage is defined"
     msg: "Please pass a value for variable. Example: Dev, Test, Production etc"
   tags:
     - logstash
-        
+
 - name: Copy grok pattern file
   copy:
-    src=grok-patterns
-    dest={{ grok_pattern_path }}/grok-patterns
+    src: grok-patterns
+    dest: "{{ grok_pattern_path }}/grok-patterns"
   become: true
   become_user: "{{ logstash_user }}"
   tags:
@@ -18,8 +19,8 @@
 
 - name: Copy template
   template:
-    src=ansible_tower_logstash_shipper.conf.j2
-    dest={{ logstash_ansible_tower_config_path }}/ansible-tower.conf  
+    src: ansible_tower_logstash_shipper.conf.j2
+    dest: "{{ logstash_ansible_tower_config_path }}/ansible-tower.conf"
   become: true
   become_user: "{{ logstash_user }}"
   tags:
